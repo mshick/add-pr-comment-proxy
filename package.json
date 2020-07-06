@@ -1,14 +1,14 @@
 {
   "name": "add-pr-comment-bot",
   "version": "0.0.1",
-  "dependencies": {
-    "express": "4.17.1"
-  },
   "scripts": {
     "start": "node app.js"
   },
   "engines": {
     "node": "12.11.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "prettier": "^2.0.5"
