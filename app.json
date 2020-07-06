@@ -1,0 +1,14 @@
+{
+  "name": "add-pr-comment-bot",
+  "env": {
+    "GITHUB_TOKEN": {
+      "description": "Provide a GitHub personal access token with the repo:public_repo scope",
+      "required": true
+    },
+    "WEBHOOK_SECRET": {
+      "description": "A webhook secret to send with your bot requests",
+      "generator": "secret",
+      "required": true
+    }
+  }
+}
