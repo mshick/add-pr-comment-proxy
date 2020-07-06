@@ -10,5 +10,8 @@
       "generator": "secret",
       "required": true
     }
+  },
+  "hooks": {
+    "postcreate": ["./setup.sh"]
   }
 }
