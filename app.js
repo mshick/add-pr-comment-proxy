@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const app = express()
 const {HttpClient} = require('@actions/http-client')
+const app = express()
 
 const basicAuth = (username = '', password = '', realm = 'protected') => (req, res, next) => {
   const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
