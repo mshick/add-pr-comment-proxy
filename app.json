@@ -12,6 +12,8 @@
     }
   },
   "hooks": {
-    "postcreate": ["./setup.sh"]
+    "postcreate": {
+      "commands": ["./setup.sh"]
+    }
   }
 }
