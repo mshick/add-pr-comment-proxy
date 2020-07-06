@@ -45,7 +45,7 @@ app.post('/:owner/:repo/issues/:issueNumber/comments', async (req, res, next) =>
 
     const response = await createComment({
       ...req.params,
-      body: req.body,
+      ...req.body,
       repoToken: process.env.GITHUB_TOKEN,
     })
 
