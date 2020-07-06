@@ -16,7 +16,7 @@ const basicAuth = (username = '', password = '', realm = 'protected') => (req, r
 app.use(basicAuth(process.env.WEBHOOK_SECRET))
 
 app.get('/', (req, res) => {
-  res.send('you made it!')
+  res.send('you made it!---' + JSON.stringify(process.env))
 })
 
 app.listen(process.env.PORT || 3000)
