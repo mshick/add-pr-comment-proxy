@@ -7,13 +7,7 @@
     },
     "WEBHOOK_SECRET": {
       "description": "A webhook secret to send with your bot requests",
-      "generator": "secret",
       "required": true
-    }
-  },
-  "hooks": {
-    "postcreate": {
-      "commands": ["./setup.sh"]
     }
   }
 }
