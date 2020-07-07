@@ -3,18 +3,6 @@ const bodyParser = require('body-parser')
 const {HttpClient} = require('@actions/http-client')
 const {ErrorHandler, BadRequestError} = require('express-json-api-error-handler')
 
-// const basicAuth = (username = '', password = '', realm = 'protected') => (req, res, next) => {
-//   const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
-//   const [reqUsername, reqPassword] = Buffer.from(b64auth, 'base64').toString().split(':')
-
-//   if (username === reqUsername && password === reqPassword) {
-//     return next()
-//   }
-
-//   res.set('WWW-Authenticate', `Basic realm="${realm}"`)
-//   next(new AuthError('Authentication required.'))
-// }
-
 const createComment = async (http, params) => {
   const {repoToken, owner, repo, issueNumber, body} = params
 
@@ -47,9 +35,11 @@ const checkToken = async (http, token) => {
   } catch (err) {
     // Far from perfect, temporary tokens are difficult to identify
     // A bad token returns 401, and a personal token returns 200
-    console.log('err--------------')
-    console.log(err.result.message)
-    return err.statusCode === 403 && err.result.message.startsWith('Resource not accessible by integration')
+    return (
+      err.statusCode === 403 &&
+      err.result.message &&
+      err.result.message.startsWith('Resource not accessible by integration')
+    )
   }
 }
 
@@ -60,7 +50,6 @@ app.use((req, res, next) => {
   next()
 })
 app.use(bodyParser.json())
-// app.use(basicAuth(process.env.WEBHOOK_SECRET))
 
 app.post('/repos/:owner/:repo/issues/:issueNumber/comments', async (req, res, next) => {
   try {
