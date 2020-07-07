@@ -1,19 +1,19 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const {HttpClient} = require('@actions/http-client')
-const {ErrorHandler, AuthError, BadRequestError} = require('express-json-api-error-handler')
+const {ErrorHandler, BadRequestError} = require('express-json-api-error-handler')
 
-const basicAuth = (username = '', password = '', realm = 'protected') => (req, res, next) => {
-  const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
-  const [reqUsername, reqPassword] = Buffer.from(b64auth, 'base64').toString().split(':')
+// const basicAuth = (username = '', password = '', realm = 'protected') => (req, res, next) => {
+//   const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
+//   const [reqUsername, reqPassword] = Buffer.from(b64auth, 'base64').toString().split(':')
 
-  if (username === reqUsername && password === reqPassword) {
-    return next()
-  }
+//   if (username === reqUsername && password === reqPassword) {
+//     return next()
+//   }
 
-  res.set('WWW-Authenticate', `Basic realm="${realm}"`)
-  next(new AuthError('Authentication required.'))
-}
+//   res.set('WWW-Authenticate', `Basic realm="${realm}"`)
+//   next(new AuthError('Authentication required.'))
+// }
 
 const createComment = async (http, params) => {
   const {repoToken, owner, repo, issueNumber, body} = params
@@ -38,17 +38,13 @@ const checkToken = async (http, token) => {
     return true
   }
 
-  const response = await http.get(`https://api.github.com/`, {
+  const response = await http.getJson(`https://api.github.com/user/repos`, {
     accept: 'application/vnd.github.v3+json',
     authorization: `token ${token}`,
   })
 
-  if (response.message.header('X-OAuth-Scopes')) {
-    // Temporary tokens do not return this header
-    return false
-  }
-
-  return response.message.statusCode === 200
+  // Far from perfect, temporary tokens are difficult to identify
+  return response.statusCode === 403 && resource.result.message === 'Resource not accessible by integration'
 }
 
 const app = express()
@@ -58,7 +54,7 @@ app.use((req, res, next) => {
   next()
 })
 app.use(bodyParser.json())
-app.use(basicAuth(process.env.WEBHOOK_SECRET))
+// app.use(basicAuth(process.env.WEBHOOK_SECRET))
 
 app.post('/repos/:owner/:repo/issues/:issueNumber/comments', async (req, res, next) => {
   try {

@@ -15,7 +15,7 @@ jobs:
           curl -i \
             -X GET \
             -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}a" \
             https://api.github.com/user/repos
       # - name: another repo
       #   run: |
