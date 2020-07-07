@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json())
 app.use(basicAuth(process.env.WEBHOOK_SECRET))
 
-app.post('/:owner/:repo/issues/:issueNumber/comments', async (req, res, next) => {
+app.post('/repos/:owner/:repo/issues/:issueNumber/comments', async (req, res, next) => {
   try {
     const isTokenValid = await checkToken(req.httpClient, req.header('temporary-github-token'))
     if (!isTokenValid) {
