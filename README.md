@@ -1,9 +1,18 @@
-# add-pr-comment-bot
+# add-pr-comment-proxy
 
-A simple bot to proxy PR comments.
+A simple proxy for PR comments. Works well with [add-pr-comment](https://github.com/mshick/add-pr-comment/). Workaround for GitHub making all token permissions read-only when a fork is submitted for a PR. See [this discussion](https://github.community/t/github-actions-are-severely-limited-on-prs/18179/4) for more detail.
 
 ## Deploy
 
-Run on Cloud Run:
+**Requirements**
+
+- A [personal access token](https://github.com/settings/tokens) with the `repo:public_repos` scope.
+- A secure string to use as a webook secret
+
+**Run on Cloud Run**
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
+
+## How it works
+
+This app is a thin Node.js proxy around the [create an issue comment](https://docs.github.com/en/rest/reference/issues#create-an-issue-comment) GitHub endpoint that allows you to send requests with a GitHub Action's [temporary token](https://docs.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token#about-the-github_token-secret) and create issue comments. It verifies that your request comes for a legitimate source via the webhook secret and that it originates in a GitHub Action to prevent abuse.

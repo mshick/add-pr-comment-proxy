@@ -33,10 +33,20 @@ const checkToken = async (http, token) => {
     return false
   }
 
+  if (token === process.env.GITHUB_TOKEN) {
+    // Assume the use of this token is intentional
+    return true
+  }
+
   const response = await http.get(`https://api.github.com/`, {
     accept: 'application/vnd.github.v3+json',
     authorization: `token ${token}`,
   })
+
+  if (response.message.header('X-OAuth-Scopes')) {
+    // Temporary tokens do not return this header
+    return false
+  }
 
   return response.message.statusCode === 200
 }
