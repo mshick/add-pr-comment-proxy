@@ -38,16 +38,21 @@ const checkToken = async (http, token) => {
     return true
   }
 
-  const response = await http.getJson(`https://api.github.com/user/repos`, {
-    accept: 'application/vnd.github.v3+json',
-    authorization: `token ${token}`,
-  })
-
-  // Far from perfect, temporary tokens are difficult to identify
-  // A bad token returns 401, and a personal token returns 200
-  console.log(response)
-
-  return response.statusCode === 403 && response.result.message.startsWith('Resource not accessible by integration')
+  try {
+    const response = await http.getJson(`https://api.github.com/user/repos`, {
+      accept: 'application/vnd.github.v3+json',
+      authorization: `token ${token}`,
+    })
+    console.log('res------------------')
+    console.log(JSON.stringify(response))
+    return false
+  } catch (err) {
+    console.log('err------------------')
+    console.log(JSON.stringify(err))
+    // Far from perfect, temporary tokens are difficult to identify
+    // A bad token returns 401, and a personal token returns 200
+    return err.statusCode === 403 && err.message.startsWith('Resource not accessible by integration')
+  }
 }
 
 const app = express()
@@ -80,7 +85,7 @@ app.post('/repos/:owner/:repo/issues/:issueNumber/comments', async (req, res, ne
 
 // Must use last
 const errorHandler = new ErrorHandler()
-errorHandler.setErrorEventHandler((err) => console.log(err))
+errorHandler.setErrorEventHandler((err) => console.log(JSON.stringify(err)))
 app.use(errorHandler.handle)
 
 app.listen(process.env.PORT || 3000)
