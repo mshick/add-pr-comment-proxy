@@ -15,3 +15,9 @@ jobs:
           curl -v \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/repos/mshick/add-pr-comment-bot/issues
+
+      - name: api.github
+        run: |
+          curl -v \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/
