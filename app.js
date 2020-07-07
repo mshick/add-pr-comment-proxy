@@ -44,7 +44,8 @@ const checkToken = async (http, token) => {
   })
 
   // Far from perfect, temporary tokens are difficult to identify
-  return response.statusCode === 403 && resource.result.message === 'Resource not accessible by integration'
+  // A bad token returns 401, and a personal token returns 200
+  return response.statusCode === 403 && response.result.message === 'Resource not accessible by integration'
 }
 
 const app = express()
