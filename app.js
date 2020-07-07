@@ -43,15 +43,13 @@ const checkToken = async (http, token) => {
       accept: 'application/vnd.github.v3+json',
       authorization: `token ${token}`,
     })
-    console.log('res------------------')
-    console.log(JSON.stringify(response))
     return false
   } catch (err) {
-    console.log('err------------------')
-    console.log(JSON.stringify(err))
     // Far from perfect, temporary tokens are difficult to identify
     // A bad token returns 401, and a personal token returns 200
-    return err.statusCode === 403 && err.message.startsWith('Resource not accessible by integration')
+    console.log('err--------------')
+    console.log(err.result.message)
+    return err.statusCode === 403 && err.result.message.startsWith('Resource not accessible by integration')
   }
 }
 
