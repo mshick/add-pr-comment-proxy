@@ -1,0 +1,17 @@
+name: DEBU
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  debug:
+    name: DEBUG
+    runs-on: ubuntu-latest
+    steps:
+      - name: simple request
+        run: |
+          curl -v \
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          https://api.github.com/repos/mshick/add-pr-comment-bot/issues
