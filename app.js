@@ -12,7 +12,7 @@ const createComment = async (http, params) => {
     {
       accept: 'application/vnd.github.v3+json',
       authorization: `token ${repoToken}`,
-    },
+    }
   )
 }
 
@@ -27,7 +27,7 @@ const checkToken = async (http, token) => {
   }
 
   try {
-    const response = await http.getJson(`https://api.github.com/user/repos`, {
+    await http.getJson(`https://api.github.com/user/repos`, {
       accept: 'application/vnd.github.v3+json',
       authorization: `token ${token}`,
     })
@@ -72,7 +72,7 @@ app.post('/repos/:owner/:repo/issues/:issueNumber/comments', async (req, res, ne
 
 // Must use last
 const errorHandler = new ErrorHandler()
-errorHandler.setErrorEventHandler((err) => console.log(JSON.stringify(err)))
+errorHandler.setErrorEventHandler(err => console.log(JSON.stringify(err)))
 app.use(errorHandler.handle)
 
 app.listen(process.env.PORT || 3000)

@@ -4,6 +4,16 @@
   "scripts": {
     "start": "node app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mshick/add-pr-comment-proxy.git"
+  },
+  "author": "Michael Shick <m@shick.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mshick/add-pr-comment-proxy/issues"
+  },
+  "homepage": "https://github.com/mshick/add-pr-comment-proxy#readme",
   "engines": {
     "node": "12.11.0"
   },
@@ -14,6 +24,9 @@
     "express-json-api-error-handler": "^6.0.0"
   },
   "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.0.5"
   }
 }
