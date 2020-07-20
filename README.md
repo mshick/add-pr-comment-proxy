@@ -7,7 +7,6 @@ A simple proxy for PR comments. Works well with [add-pr-comment](https://github.
 **Requirements**
 
 - A [personal access token](https://github.com/settings/tokens) with the `repo:public_repos` scope if you're using this to support a public repo. Your use-case might require other scopes.
-- A secure string to use as a webook secret
 
 **Run on Cloud Run**
 
